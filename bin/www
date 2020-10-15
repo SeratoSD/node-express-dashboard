@@ -9,7 +9,7 @@ const debug = require("debug")("log-dashboard:server");
 const http = require("http");
 const WebSocket = require("ws");
 const fs = require("fs");
-getSettings =  require("../services/settings-service");
+const {getSettings} =  require("../services/settings-service");
 const { waitForDebugger } = require("inspector");
 const { chunk } = require("lodash");
 
@@ -42,11 +42,7 @@ wss.on("connection", (ws) => {
         let logsArr = chunk.toString().split("\n");
         const settings = getSettings();
         if (settings.filter) {
-          logsArr.filter((line) => {
-            if (line.includes(settings.filter)) {
-              logsArr.push(line);
-            }
-          })
+          logsArr = logsArr.filter( line =>  !line.includes(settings.filter) );
         }
         let logsStr = logsArr.reverse().join("\n");
         ws.send(logsStr);
