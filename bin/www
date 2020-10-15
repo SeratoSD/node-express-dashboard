@@ -34,7 +34,7 @@ server.on("listening", onListening);
 
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {
-    ws.send("Hello from the server! Ypu sent: " + message);
+    ws.send("Hello from the server! You sent: " + message);
   })
 })
 
