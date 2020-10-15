@@ -20,6 +20,7 @@ function getDirectoryContents(files, currentDir, query) {
             });
         }
     });
+    return data;
 }
 
 function isDirectory(currentDir, file) {
