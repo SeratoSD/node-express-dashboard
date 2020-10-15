@@ -16,7 +16,7 @@ function getDirectoryContents(files, currentDir, query) {
                 name: file,
                 isDirectory: false,
                 path: path.join(query, file),
-                currentDir: currentDir
+                currentDir
             });
         }
     });
