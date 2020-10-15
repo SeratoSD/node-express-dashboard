@@ -4,12 +4,12 @@ const dir = process.cwd();
 
 function getDirectoryContents(files, currentDir, query) {
     const data = [];
-    files.forEach(file => {
+    files.forEach((file) => {
         if(isDirectory(currentDir, file)){
             data.push({name: file, isDirectory: true, path: path.join(query, file)});
         }
         else{
-            data.push({name: file, isDirectory: false, path: path.join(query, file), currentDir: currentDir});
+            data.push({name: file, isDirectory: false, path: path.join(query, file), currentDir});
         }
     });
 }
@@ -31,7 +31,7 @@ function readDir(currentDir, res, query) {
 
 exports.get = (req, res) => {
     let currentDir = dir;
-    const query = req.query.path ? req.query.path : "";
+    const query = req.query.path || "";
     if(query){
         currentDir = path.join(currentDir, query);
     }
