@@ -5,25 +5,33 @@ const dir = process.cwd();
 function getDirectoryContents(files, currentDir, query) {
     const data = [];
     files.forEach((file) => {
-        if(isDirectory(currentDir, file)){
-            data.push({name: file, isDirectory: true, path: path.join(query, file)});
-        }
-        else{
-            data.push({name: file, isDirectory: false, path: path.join(query, file), currentDir});
+        if (isDirectory(currentDir, file)) {
+            data.push({
+                name: file,
+                isDirectory: true,
+                path: path.join(query, file)
+            });
+        } else {
+            data.push({
+                name: file,
+                isDirectory: false,
+                path: path.join(query, file),
+                currentDir
+            });
         }
     });
 }
 
 function isDirectory(currentDir, file) {
-    const fileInfo = fs.statSync(path.join(currentDir,file));
+    const fileInfo = fs.statSync(path.join(currentDir, file));
     return fileInfo.isDirectory();
 }
 
 function readDir(currentDir, res, query) {
-    fs.readdir(currentDir, (err,files) => {
+    fs.readdir(currentDir, (err, files) => {
         let directoryContents = [];
-        if (!err){
-            directoryContents = getDirectoryContents(files,currentDir, query);
+        if (!err) {
+            directoryContents = getDirectoryContents(files, currentDir, query);
         }
         res.json(directoryContents);
     })
@@ -32,9 +40,9 @@ function readDir(currentDir, res, query) {
 exports.get = (req, res) => {
     let currentDir = dir;
     const query = req.query.path || "";
-    if(query){
+    if (query) {
         currentDir = path.join(currentDir, query);
     }
-    readDir(currentDir,res,query);
+    readDir(currentDir, res, query);
 
 };
